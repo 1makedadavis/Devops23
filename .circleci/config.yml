@@ -12,7 +12,7 @@ jobs:
 
       - run:
           name: Install dependencies
-          command: npm install react-simple-chatbot --save
+          command: npx mocha tests/helpers/setup.js tests/**/*.spec.js --require @babel/register
           
   test:
     docker:
