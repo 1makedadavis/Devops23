@@ -5,7 +5,7 @@ import Adapter from 'enzyme-adapter-react-16';
 
 configure({ adapter: new Adapter() });*/
 
-import { jsdom } from 'jsdom';
+import { JSDOM } from 'jsdom'import;
 
 const exposedProperties = ['window', 'navigator', 'document'];
 const storage = {};
