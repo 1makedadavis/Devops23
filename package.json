@@ -91,7 +91,8 @@
     "prop-types": "^15.6.0",
     "random-id": "0.0.2",
     "react": "^16.3.0",
-    "react-dom": "^16.3.0"
+    "react-dom": "^16.3.0",
+    "react-simple-chatbot": "^0.6.1"
   },
   "peerDependencies": {
     "react": "^16.3.0",
