@@ -3,9 +3,9 @@
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
-configure({ adapter: new Adapter() });
+configure({ adapter: new Adapter() });*/
 
-const jsdom = require('jsdom').jsdom;*/
+const jsdom = import { jsdom } from 'jsdom';
 
 const exposedProperties = ['window', 'navigator', 'document'];
 const storage = {};
