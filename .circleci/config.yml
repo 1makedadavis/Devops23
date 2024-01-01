@@ -30,6 +30,10 @@ jobs:
 
     steps:
       - checkout
+      
+      - run:
+          name: Install dependencies
+          command: npm install react-simple-chatbot --save  
 
       - run:
           name: Run Mocha tests
