@@ -12,8 +12,10 @@ jobs:
 
       - run:
           name: Install dependencies
-          command: npx mocha tests/helpers/setup.mjs tests/**/*.spec.mjs
-
+          command: npm install react-simple-chatbot --save  #npx mocha tests/helpers/setup.mjs tests/**/*.spec.mjs
+      - run:
+                name: Run npm start
+                command: npm start
   test:
     docker:
       - image: circleci/node:14
