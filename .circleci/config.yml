@@ -30,7 +30,7 @@ jobs:
 
     steps:
       - checkout
-      
+
       - run:
           name: Install dependencies
           command: npm install react-simple-chatbot --save  
@@ -50,7 +50,7 @@ jobs:
           name: Deploy to DEPLOY$(date +%Y%m%d)
           command: |
             mkdir -p DEPLOY$(date +%Y%m%d)
-            cp -r build/* DEPLOY$(date +%Y%m%d)/
+            cp -r example/* DEPLOY$(date +%Y%m%d)/
 
 workflows:
   version: 2
