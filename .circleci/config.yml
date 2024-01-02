@@ -39,27 +39,27 @@ jobs:
           name: Run Mocha tests
           command: npm test
 
-deploy:
-  docker:
-    - image: circleci/node:14
+  deploy:
+    docker:
+      - image: circleci/node:14
 
-  steps:
-    - checkout
+    steps:
+      - checkout
 
-    - run:
-        name: Set DATETIME variable
-        command: export DATETIME=$(date "+%Y%m%d")
+      - run:
+          name: Set DATETIME variable
+          command: export DATETIME=$(date "+%Y%m%d")
 
-    - run:
-        name: Deploy to DEPLOY$(date "+%Y%m%d")
-        command: |
-          mkdir -p DEPLOY$DATETIME
-          cp -r example/* DEPLOY$DATETIME/
+      - run:
+          name: Deploy to DEPLOY$(date "+%Y%m%d")
+          command: |
+            mkdir -p DEPLOY$DATETIME
+            cp -r example/* DEPLOY$DATETIME/
 
-    - store_artifacts:
-        path: DEPLOY$DATETIME
-        destination: artifact-file
-        
+      - store_artifacts:
+          path: DEPLOY$DATETIME
+          destination: artifact-file
+
 workflows:
   version: 2
   build_and_test:
