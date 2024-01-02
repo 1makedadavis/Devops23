@@ -51,6 +51,8 @@ jobs:
           command: |
             mkdir -p DEPLOY$(date +%Y%m%d)
             cp -r example/* DEPLOY$(date +%Y%m%d)/
+      - store_artifacts:
+        path: DEPLOY$(date +%Y%m%d)
 
 workflows:
   version: 2
