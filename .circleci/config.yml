@@ -4,37 +4,28 @@ jobs:
   build:
     docker:
       - image: circleci/node:14
-
     working_directory: ~/Devops23
-
     steps:
       - checkout
-
       - run:
           name: Install dependencies
-          command: npm install react-simple-chatbot --save  
-
+          command: npm install react-simple-chatbot --save
       - run:
           name: Run tests
-          command: npm test  
-
+          command: npm test
       - run:
           name: Build artifacts
-          command: npm run build  
+          command: npm run build
 
   test:
     docker:
       - image: circleci/node:14
-
     working_directory: ~/Devops23
-
     steps:
       - checkout
-
       - run:
           name: Install dependencies
-          command: npm install react-simple-chatbot --save  
-
+          command: npm install react-simple-chatbot --save
       - run:
           name: Run Mocha tests
           command: npm test
@@ -42,23 +33,48 @@ jobs:
   deploy:
     docker:
       - image: circleci/node:14
-
     steps:
       - checkout
-
       - run:
           name: Set DATETIME variable
-          command: export DATETIME=$(date "+%Y%m%d")
-
+          command: |
+            export DATETIME=$(date "+%Y%m%d")
+            echo "DATETIME=$DATETIME" >> $BASH_ENV
+            source $BASH_ENV
       - run:
           name: Deploy to DEPLOY$(date "+%Y%m%d")
           command: |
             mkdir -p DEPLOY$DATETIME
             cp -r example/* DEPLOY$DATETIME/
-
       - store_artifacts:
           path: DEPLOY$DATETIME
           destination: artifact-file
+
+  say-date:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run:
+          name: Set VAR and Create Dated File
+          command: |
+            export DATETIME=$(date "+%Y%m%d.%H%M%S")
+            echo "DATETIME=$DATETIME" >> $BASH_ENV
+            source $BASH_ENV
+            mkdir -p workspace
+            echo "export DATETIME=datetime.$DATETIME" >> workspace/new-env-vars
+            echo "export BOB=$BAZ" >> workspace/new-env-vars
+            cat workspace/new-env-vars
+            cat workspace/new-env-vars >> $BASH_ENV
+            echo ${DATETIME:-NULL}
+            mkdir /tmp/artifacts
+            echo "my artifact files in a dir" > /tmp/artifacts/encap-staging-no-color_${DATETIME:-NULL}.txt
+      - store_artifacts:
+          path: /tmp/artifacts
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - new-env-vars
 
 workflows:
   version: 2
@@ -79,6 +95,11 @@ workflows:
       - deploy:
           requires:
             - test
+          filters:
+            branches:
+              only:
+                - main
+      - say-date:
           filters:
             branches:
               only:
