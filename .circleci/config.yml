@@ -47,13 +47,20 @@ jobs:
       - checkout
 
       - run:
-          name: Deploy to DEPLOY-$(date '+%Y%m%d')
+          name: Set DATETIME variable
           command: |
-            mkdir -p DEPLOY-$(date '+%Y%m%d')
-            cp -r example/* DEPLOY-$(date '+%Y%m%d')/
+            export DATETIME=$(date "+%Y%m%d")
+            echo "DATETIME=$DATETIME" >> $BASH_ENV
+            source $BASH_ENV
+
+      - run:
+          name: Deploy to DEPLOY$(date "+%Y%m%d")
+          command: |
+            mkdir -p DEPLOY$DATETIME
+            cp -r example/* DEPLOY$DATETIME/
 
       - store_artifacts:
-          path: DEPLOY-$(date '+%Y%m%d')
+          path: DEPLOY$DATETIME
           destination: artifact-file
 
 workflows:
