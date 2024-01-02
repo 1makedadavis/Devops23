@@ -49,11 +49,12 @@ jobs:
       - run:
           name: Deploy to DEPLOY$(date +%Y%m%d)
           command: |
-            mkdir -p DEPLOY$(date +%Y%m%d)
-            cp -r example/* DEPLOY$(date +%Y%m%d)/
-      - store_artifacts:
-          path: DEPLOY$(date +%Y%m%d)
-          destination: artifact-file
+          mkdir -p DEPLOY$(date "+%Y%m%d")
+          cp -r example/* DEPLOY$(date "+%Y%m%d")/
+
+    - store_artifacts:
+        path: DEPLOY$(date "+%Y%m%d")
+        destination: artifact-file
 
 workflows:
   version: 2
